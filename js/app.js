@@ -7,6 +7,7 @@ const menuLinks = [
 
 let mainEl = document.querySelector('main')
 mainEl.style.backgroundColor = 'var(--main-bg)'
+mainEl.style.height = '100vh'
 mainEl.innerHTML = '<h1>SEI Rocks!</h1>'
 mainEl.classList.add('flex-ctr')
 
