@@ -1,3 +1,4 @@
+// Menu data structure
 const menuLinks = [
   {text: 'about', href: '/about'},
   {text: 'catalog', href: '/catalog'},
