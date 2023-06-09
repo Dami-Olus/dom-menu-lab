@@ -72,40 +72,40 @@ topMenuEl.addEventListener("click", (e) => {
   //Do nothing if no link is clicked
   if (e.target.tagName.toLowerCase() !== "a") {
     return;
-  }
-
-  //if an active link is clicked remove the active class
-  if (e.target.classList.contains("active")) {
+  } else if(e.target.classList.contains("active")) {
     e.target.classList.remove("active");
     showingSubMenu = false;
     subMenuEl.style.top = "0";
+    return;
+  } else {
+//remove active from all other links
+topMenuLinks.forEach((link) => {
+  link.classList.remove("active");
+});
+
+e.target.classList.add("active");
+
+//Check if the menu has sublinks
+if (menuLinks[e.target.id].hasOwnProperty("subLinks")) {
+  showingSubMenu = true;
+  console.log(showingSubMenu);
+}
+
+if (showingSubMenu) {
+  console.log(menuLinks[e.target.id].subLinks)
+  buildSubMenu(menuLinks[e.target.id].subLinks);
+  subMenuEl.style.top = "100%";
+} else {
+  subMenuEl.style.top = "0";
+  mainEl.innerHTML = "<h1>about</h1>";
+}
   }
 });
 
 topMenuEl.addEventListener("click", (e) => {
   e.preventDefault();
 
-  //remove active from all other links
-  topMenuLinks.forEach((link) => {
-    link.classList.remove("active");
-  });
-
-  e.target.classList.add("active");
-
-  //Check if the menu has sublinks
-  if (menuLinks[e.target.id].hasOwnProperty("subLinks")) {
-    showingSubMenu = true;
-    console.log(showingSubMenu);
-  }
-
-  if (showingSubMenu) {
-    console.log(menuLinks[e.target.id].subLinks)
-    buildSubMenu(menuLinks[e.target.id].subLinks);
-    subMenuEl.style.top = "100%";
-  } else {
-    subMenuEl.style.top = "0";
-    mainEl.innerHTML = "<h1>about</h1>";
-  }
+  
 });
 
 function buildSubMenu(arr){
@@ -118,3 +118,16 @@ function buildSubMenu(arr){
 
   })
 }
+
+subMenuEl.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (e.target.tagName.toLowerCase() !== "a") {
+    return;
+  }
+  showingSubMenu = false
+  subMenuEl.style.top = "0"
+  topMenuEl.classList.remove('active')
+  
+  mainEl.innerHTML = e.target.innerText
+  
+});
